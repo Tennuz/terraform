@@ -8,7 +8,7 @@ UPGRADE NOTES:
     * Terraform 1.4 series users should upgrade to 1.4.7;
     * Terraform 1.5 series users should upgrade to 1.5.7;
     * Users of Terraform 1.6.0 and later are unaffected.
- 
+
   This is important for users with `terraform_remote_state` data sources reading remote state across different versions of Terraform.
 * `nonsensitive` function no longer raises an error when applied to a value that is already non-sensitive. ([#33856](https://github.com/hashicorp/terraform/issues/33856))
 * `terraform graph` now produces a simplified graph describing only relationships between resources by default, for consistency with the granularity of information returned by other commands that emphasize resources as the main interesting object type and de-emphasize the other "glue" objects that connect them.
@@ -24,9 +24,9 @@ NEW FEATURES:
     * `override_resource`: Specific resources can be overridden so Terraform will create a fake resource with custom values instead of creating infrastructure for the overridden resource.
     * `override_data`: Specific data sources can be overridden so data can be imported into tests without requiring real infrastructure to be created externally first.
     * `override_module`: Specific modules can be overridden in their entirety to give greater control over the returned outputs without requiring in-depth knowledge of the module itself.
- 
+
 * `removed` block for refactoring modules: Module authors can now record in source code when a resource or module call has been removed from configuration, and can inform Terraform whether the corresponding object should be deleted or simply removed from state.
-  
+
   This effectively provides a configuration-driven workflow to replace `terraform state rm`. Removing an object from state is a new type of action which is planned and applied like any other. The `terraform state rm` command will remain available for scenarios in which directly modifying the state file is appropriate.
 
 BUG FIXES:
@@ -45,6 +45,7 @@ ENHANCEMENTS:
 * `terraform console`: Now supports a `-plan` option which allows evaluating expressions against the planned new state, rather than against the prior state. This provides a more complete set of values for use in console expressions, at the expense of a slower startup time due first calculating the plan. ([#34342](https://github.com/hashicorp/terraform/issues/34342))
 * `import`: `for_each` can now be used to expand the `import` block to handle multiple resource instances ([#33932](https://github.com/hashicorp/terraform/issues/33932))
 * If the proposed change for a resource instance is rejected either due to a `postcondition` block or a `prevent_destroy` setting, Terraform will now include that proposed change in the plan output alongside the relevant error, whereas before the error would _replace_ the proposed change in the output. ([#34312](https://github.com/hashicorp/terraform/issues/34312))
+* `cloud`: During plan/apply runs, packing large directories that are ignored by `.terraformignore` will take much less time provided no following negation rules are present in `.terraformignore` ([#34358](https://github.com/hashicorp/terraform/pull/34358))
 
 ## Previous Releases
 
